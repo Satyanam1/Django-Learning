@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .btn-green {
+            background-color: green;
+        }
+
+        .btn-blue {
+            background-color: steelblue;
+        }
+
+
+        /* Modal backdrop */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        /* Modal box */
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            position: relative;
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 22px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 7px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            margin-top: 18px;
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 15px;
+        }
+
+        .msg-success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .msg-error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Flash Messages -->
+    <div class="messages">
+        {% for message in messages %}
+        <p class="{% if message.tags == 'error' %}msg-error{% else %}msg-success{% endif %}">
+            {{ message }}
+        </p>
+        {% endfor %}
+    </div>
+
+    <h2>Welcome to Student Portal</h2>
+
+    <!-- Buttons to open modals -->
+    <button class="btn btn-green" onclick="openModal('studentModal')">Add Student</button>
+    <button class="btn btn-blue" onclick="openModal('rollModal')">Add Roll No</button>
+    <button class="btn btn-green" onclick="openModal('deptModal')">Add Department </button>
+
+
+    <!-- Student Modal -->
+    <div class="modal" id="studentModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('studentModal')">&#x2715;</button>
+            <h2>Add Student</h2>
+            <form method="POST" action="{% url 'student' %}">
+                {% csrf_token %}
+                <label>Student Name</label>
+                <input type="text" name="student_name" placeholder="Enter student name" required>
+
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter email" required>
+
+                <label>Contact</label>
+                <input type="number" name="contact" placeholder="Enter phone number" required>
+
+                <label>City</label>
+                <input type="text" name="city" placeholder="Enter city" required>
+
+                <button type="submit" class="submit-btn">Add Student</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Roll No Modal -->
+    <div class="modal" id="rollModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('rollModal')">&#x2715;</button>
+            <h2>Add Roll No</h2>
+            <form method="POST" action="{% url 'Add_roll' %}">
+                {% csrf_token %}
+                <label>Roll No</label>
+                <input type="text" name="rollno" placeholder="Enter roll number" required>
+
+                <label>Created By</label>
+                <input type="text" name="created_by" placeholder="Enter name" required>
+
+                <label>Select Student</label>
+                <select name="student_name" required>
+                    <option value="">-- Select Student --</option>
+                    {% for i in students %}
+                    <option value="{{ i.id }}">{{ i.student_name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Select Dept</label>
+                <select name="student_dept">
+                    <option value="">-- Select department --</option>
+                    {% for i in departments %}
+                    <option value="{{i.id}}">{{i.dept_name}}</option> 
+                    {% endfor %}   
+                </select>
+                <button type="submit" class="submit-btn">Save Roll No</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="deptModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('deptModal')">&#x2715;</button>
+            <h2>Add Department</h2>
+            <form action="{% url 'department' %}" method="post">
+                {% csrf_token %}
+                <label>Department Name</label>
+                <input type="text" name="dept_name" placeholder="Enter department Name">
+
+                <label>Department Description</label>
+                <input type="text" name="dept_desc" placeholder="Enter department description ">
+
+                <button type="submit" class="submit-btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+        // Close modal if user clicks outside the box
+        window.addEventListener('click', function (e) {
+            document.querySelectorAll('.modal').forEach(function (modal) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // Auto-open modal if there's a message (after form submit)
+
+    </script>
+
+</body>
+
+</html>

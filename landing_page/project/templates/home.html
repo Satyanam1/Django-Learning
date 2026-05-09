@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<body>
+    <section>
+      <a href="{% url 'login' %}"><img src="{% static 'image/background.avif' %}" class="w-screen h-screen object-cover mb-4 " alt="lap"></a> 
+    </section>
+
+
+    <section class="min-h-screen ">
+
+        <div>
+            <h2 class="text-3xl text-center">Hey👋</h2>
+            <h2 class="text-center text-3xl">This is Satyanam Ray</h2>
+        </div>
+
+ {% for student in students %}
+
+    <h2 class="mb-2">{{ student.username }}</h2>
+
+
+    <!-- Image -->
+    {% if student.picture %}
+        <img src="{{ student.picture.url }}" width="200">
+    {% endif %}
+
+    <!-- Audio -->
+    {% if student.audio %}
+        <audio controls>
+            <source src="{{ student.audio.url }}">
+        </audio>
+    {% endif %}
+
+    <!-- Video -->
+    {% if student.video %}
+        <video width="300" controls class=" p-8">
+            <source src="{{ student.video.url }}">
+        </video>
+    {% endif %}
+
+    <!-- File -->
+    {% if student.file %}
+        <a href="{{ student.file.url }}" target="_blank" class="bg-green-500 px-4 py-2 rounded-xl">Open Resume</a>
+    {% endif %}
+
+    <hr class="mt-5">
+
+{% endfor %}
+
+
+    </section>
+
+
+
+    <hr>
+
+    <section class="min-h-screen">
+        <div class="grid md:grid-cols-3 gap-6">
+            <div>
+                <p class="text-3xl text-center">Hey👋</p>
+                <h2>Hey, Use the important links to save your time</h2>
+            </div>
+
+            <div>
+                <h2 class="text-3xl">Links</h2>
+                <ul class="space-y-1">
+                    <li><a href="https://www.google.com" target="_blank" class="hover:underline">google</a></li>
+                    <li><a href="https://www.w3schools.com/django/index.php" target="_blank"
+                            class="hover:underline">Django Tutorial</a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+                    <li><a href="" target="_blank" class="hover:underline"></a></li>
+
+
+                </ul>
+            </div>
+        </div>
+
+    </section>
+    <hr class="text-gray-700">
+
+
+
+    <!-- 
+    {% if xyz %}
+    <table>
+        <tr >
+            <th>Sno</th>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+
+        {% for i in xyz %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.city}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %} -->
+
+
+</body>
+{% endblock %}

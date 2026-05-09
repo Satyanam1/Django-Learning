@@ -1,0 +1,45 @@
+
+<style>
+    .success {
+        background-color: green;
+        color: white;
+        padding: 10px;
+        margin-top: 10px;
+        position: fixed;
+    }
+
+    .error {
+        background-color: red;
+        color: white;
+        padding: 10px;
+
+    }
+
+    .info {
+        background-color: yellow;
+        padding: 10px;
+        
+    }
+
+</style>
+
+<button><a href="{% url 'my_render' %}">Render</a></button>
+<button style="background-color: aqua;"><a href="{% url 'my_redirect' %}">Redirect</a></button>
+
+
+
+{% if messages %}
+   
+   {% for message in messages %}
+
+   <div class="{{message.tags}}">
+    {{message}}
+   </div>
+    
+   {% endfor %}
+    
+    
+{% endif %}
+    
+    
+    

@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<p class=" text-2xl bg-green-500">{{msg2}}</p> 
+<section class="min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow-lg mt-5">
+
+        <h2 class="text-3xl font-bold text-center mb-6">
+            Create Account
+        </h2>
+
+        <form action="{% url 'regis' %}" method="post" class="space-y-5" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h1 class="text-pink-400 text-3xl">{{msg1}}</h1>
+
+            <!-- Username -->
+            <div>
+                <label class="block mb-1 text-sm text-gray-300">Username</label>
+                <input type="text" name="username" placeholder="Enter username"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block mb-1 text-sm text-gray-300">Email</label>
+                <input type="email" name="email" placeholder="Enter email"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+            </div>
+             <p class="font-bold text-pink-400">{{msg}}</p>
+
+            <!-- Number -->
+            <div>
+                <label class="block text-sm text-gray-300">Number</label>
+                <input type="number" name="number"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- Phone -->
+            <div>
+                <label class="block text-sm text-gray-300">Phone</label>
+                <input type="tel" name="phone" placeholder="Enter phone number"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- URL -->
+            <div>
+                <label class="block text-sm text-gray-300">Website</label>
+                <input type="url" name="website" placeholder="https://example.com"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- Date -->
+            <div>
+                <label class="block text-sm text-gray-300">Date</label>
+                <input type="date" name="date"
+                    class="w-full px-4 py-2 rounded border border-gray-700 bg-gray-900 focus:outline-none  focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- Time -->
+            <div>
+                <label class="block text-sm text-gray-300">Time</label>
+                <input type="time" name="time"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- File -->
+            <div>
+                <label class="block text-sm text-gray-300">Upload Resume</label>
+                <input type="file" name="file" accept=".pdf"
+                    class="w-full px-4 py-2 bg-gray-900 text-gray-300 focus:ring-2 focus:ring-pink-500 rounded "
+                    >
+            </div>
+
+             <div>
+                <label class="block text-sm text-gray-300">Upload Pic</label>
+                <input type="file" name="picture" accept="image/*"
+                    class="w-full px-4 py-2 bg-gray-900 text-gray-300 focus:ring-2 focus:ring-pink-500 rounded ">
+            </div>
+
+             <div>
+                <label class="block text-sm text-gray-300">Upload Audio</label>
+                <input type="file" name="audio" accept="audio/*"
+                    class="w-full px-4 py-2 bg-gray-900 text-gray-300 focus:ring-2 focus:ring-pink-500 rounded ">
+            </div>
+
+             <div>
+                <label class="block text-sm text-gray-300">Upload Video</label>
+                <input type="file" name="video" accept="video/*"
+                    class="w-full px-4 py-2 bg-gray-900 text-gray-300 focus:ring-2 focus:ring-pink-500 rounded ">
+            </div>
+
+
+            <!-- Radio -->
+            <div>
+                <label class="block text-sm text-gray-300 mb-1">Gender</label>
+                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label class="ml-4"><input type="radio" name="gender" value="female"> Female</label>
+            </div>
+
+
+            <!-- Checkbox -->
+            <div>
+                <label class="block text-sm text-gray-300 mb-1">Hobbies</label>
+                <label><input type="checkbox" name="hobby" value="coding"> Coding</label>
+                <label class="ml-4"><input type="checkbox" name="hobby" value="music"> Music</label>
+            </div>
+
+            <!-- Select -->
+            <div>
+                <label class="block text-sm text-gray-300">Select Country</label>
+                <select name="country" class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700">
+                    <option>India</option>
+                    <option>USA</option>
+                    <option>UK</option>
+                </select>
+            </div>
+
+            <!-- Textarea -->
+            <div>
+                <label class="block text-sm text-gray-300">Message</label>
+                <textarea name="message" rows="4"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
+            </div>
+
+            <!-- Hidden -->
+            <input type="hidden" name="hidden_field" value="secret_value">
+
+            <!-- Password -->
+            <div>
+                <label class="block text-sm text-gray-300">Password</label>
+                <input type="password" name="password"
+                    class="w-full px-4 py-2 rounded bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500">
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="w-full bg-green-500 py-2 rounded hover:bg-pink-600 transition font-semibold">
+                Submit
+            </button>
+
+        </form>
+
+        <!-- Extra link -->
+        <p class="text-center text-gray-400 mt-4">
+            Already have an account?
+            <a href="{% url 'login' %}" class="text-pink-400 hover:underline">
+                Login
+            </a>
+        </p>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

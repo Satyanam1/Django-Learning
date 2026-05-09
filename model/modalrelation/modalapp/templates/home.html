@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person & Passport</title>
+</head>
+<body>
+
+    <h2>Person & Passport Manager</h2>
+
+    <!-- Messages -->
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <!-- Links -->
+    <a href="#personForm">Add Person</a> |
+    <a href="#passportForm">Add Passport</a> |
+    <a href="#phoneForm">Add Phone Number</a> |
+    <a href="#groupForm">Add Group</a> |
+    <a href="#joinForm">Join Group</a>
+
+    <hr>
+
+    <!-- Add Person Form -->
+    <h3 id="personForm">Add Person</h3>
+    <form method="POST" action="{% url 'add_person' %}">
+        {% csrf_token %}
+        <label>Name</label><br>
+        <input type="text" name="name" placeholder="Enter name"><br><br>
+
+        <label>Age</label><br>
+        <input type="number" name="age" placeholder="Enter age"><br><br>
+
+        <label>City</label><br>
+        <input type="text" name="city" placeholder="Enter city"><br><br>
+
+        <button type="submit">Add Person</button>
+    </form>
+
+    <hr>
+
+    <!-- Add Passport Form -->
+    <h3 id="passportForm">Add Passport</h3>
+    <form method="POST" action="{% url 'add_passport' %}">
+        {% csrf_token %}
+        <label>Passport No</label><br>
+        <input type="text" name="passport_no" placeholder="Enter passport number"><br><br>
+
+        <label>Country</label><br>
+        <input type="text" name="country" placeholder="Enter country"><br><br>
+
+        <label>Select Person</label><br>
+        <select name="person">
+            <option value="">-- Select Person --</option>
+            {% for p in persons %}
+                <option value="{{ p.id }}">{{ p.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Add Passport</button>
+    </form>
+
+    <hr>
+
+    <!-- Add Phone Number Form -->
+    <h3 id="phoneForm">Add Phone Number</h3>
+    <form method="POST" action="{% url 'add_phone' %}">
+        {% csrf_token %}
+        <label>Phone Number</label><br>
+        <input type="text" name="number" placeholder="Enter phone number"><br><br>
+
+        <label>Number Type</label><br>
+        <select name="number_type">
+            <option value="">-- Select Type --</option>
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+            <option value="Home">Home</option>
+        </select><br><br>
+
+        <label>Select Person</label><br>
+        <select name="person">
+            <option value="">-- Select Person --</option>
+            {% for p in persons %}
+                <option value="{{ p.id }}">{{ p.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Add Phone Number</button>
+    </form>
+
+    <hr>
+
+    <!-- Add Group Form -->
+    <h3 id="groupForm">Add Group</h3>
+    <form method="POST" action="{% url 'add_group' %}">
+        {% csrf_token %}
+        <label>Group Name</label><br>
+        <input type="text" name="group_name" placeholder="Enter group name"><br><br>
+
+        <button type="submit">Add Group</button>
+    </form>
+
+    <hr>
+
+    <!-- Join Group Form -->
+    <h3 id="joinForm">Join Group</h3>
+    <form method="POST" action="{% url 'join_group' %}">
+        {% csrf_token %}
+        <label>Select Person</label><br>
+        <select name="person">
+            <option value="">-- Select Person --</option>
+            {% for p in persons %}
+                <option value="{{ p.id }}">{{ p.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Select Group</label><br>
+        <select name="group">
+            <option value="">-- Select Group --</option>
+            {% for g in groups %}
+                <option value="{{ g.id }}">{{ g.group_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Join Group</button>
+    </form>
+
+    <hr>
+
+    <!-- Person & Passport Table -->
+    <h3>All Persons & Their Passports</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>City</th>
+                <th>Passport No</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in persons %}
+            <tr>
+                <td>{{ p.name }}</td>
+                <td>{{ p.age }}</td>
+                <td>{{ p.city }}</td>
+                <td>{{ p.passport.passport_no|default:"Not Assigned" }}</td>
+                <td>{{ p.passport.country|default:"—" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- Person & Phone Numbers Table -->
+    <h3>All Persons & Their Phone Numbers</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in persons %}
+                {% for phone in p.phone_numbers.all %}
+                <tr>
+                    <td>{{ p.name }}</td>
+                    <td>{{ phone.number }}</td>
+                    <td>{{ phone.number_type }}</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- Groups & Members Table -->
+    <h3>All Groups & Their Members</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Group Name</th>
+                <th>Members</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for g in groups %}
+            <tr>
+                <td>{{ g.group_name }}</td>
+                <td>
+                    {% for member in g.members.all %}
+                        {{ member.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No members yet
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- Person & Groups Table -->
+    <h3>All Persons & Their Groups</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Person</th>
+                <th>Groups</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in persons %}
+            <tr>
+                <td>{{ p.name }}</td>
+                <td>
+                    {% for group in p.groups.all %}
+                        {{ group.group_name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No groups yet
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

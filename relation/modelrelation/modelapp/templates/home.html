@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hey</title>
+</head>
+<body>
+
+    <h2>Faaaaaaaaaaa</h2>
+
+   
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+  
+    <a href="#studentForm">Add Student</a> |
+    <a href="#deptForm">Add Department</a> |
+    <a href="#bookForm">Add Book</a> |
+    <a href="#assignForm">Assign Book</a> |
+    <a href="#rollForm">Add Roll No</a>
+
+    <hr>
+
+    
+    <h3 id="studentForm">Add Student</h3>
+    <form method="POST" action="{% url 'add_student' %}">
+        {% csrf_token %}
+        <label>Student Name</label><br>
+        <input type="text" name="student_name" placeholder="Enter student name"><br><br>
+
+        <label>Email</label><br>
+        <input type="email" name="email" placeholder="Enter email"><br><br>
+
+        <label>Contact</label><br>
+        <input type="text" name="contact" placeholder="Enter contact"><br><br>
+
+        <label>City</label><br>
+        <input type="text" name="city" placeholder="Enter city"><br><br>
+
+        <button type="submit">Add Student</button>
+    </form>
+
+    <hr>
+
+   
+    <h3 id="deptForm">Add Department</h3>
+    <form method="POST" action="{% url 'add_department' %}">
+        {% csrf_token %}
+        <label>Department Name</label><br>
+        <input type="text" name="dept_name" placeholder="Enter department name"><br><br>
+
+        <label>Department Description</label><br>
+        <input type="text" name="dept_desc" placeholder="Enter description"><br><br>
+
+        <button type="submit">Add Department</button>
+    </form>
+
+    <hr>
+
+  
+    <h3 id="bookForm">Add Book</h3>
+    <form method="POST" action="{% url 'add_book' %}">
+        {% csrf_token %}
+        <label>Book Name</label><br>
+        <input type="text" name="book_name" placeholder="Enter book name"><br><br>
+
+        <label>Author</label><br>
+        <input type="text" name="author" placeholder="Enter author name"><br><br>
+
+        <button type="submit">Add Book</button>
+    </form>
+
+    <hr>
+
+    
+    <h3 id="assignForm">Assign Book to Student</h3>
+    <form method="POST" action="{% url 'assign_book' %}">
+        {% csrf_token %}
+        <label>Select Student</label><br>
+        <select name="student">
+            <option value="">-- Select Student --</option>
+            {% for s in students %}
+                <option value="{{ s.id }}">{{ s.student_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Select Book</label><br>
+        <select name="book">
+            <option value="">-- Select Book --</option>
+            {% for b in books %}
+                <option value="{{ b.id }}">{{ b.book_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Assign Book</button>
+    </form>
+
+    <hr>
+
+    
+    <h3 id="rollForm">Add Roll No</h3>
+    <form method="POST" action="{% url 'add_rollno' %}">
+        {% csrf_token %}
+        <label>Roll No</label><br>
+        <input type="text" name="rollno" placeholder="Enter roll number"><br><br>
+
+        <label>Created By</label><br>
+        <input type="text" name="created_by" placeholder="Enter name"><br><br>
+
+        <label>Select Student</label><br>
+        <select name="student">
+            <option value="">-- Select Student --</option>
+            {% for s in students %}
+                <option value="{{ s.id }}">{{ s.student_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Select Department</label><br>
+        <select name="department">
+            <option value="">-- Select Department --</option>
+            {% for d in departments %}
+                <option value="{{ d.id }}">{{ d.dept_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Add Roll No</button>
+    </form>
+
+    <hr>
+
+
+   
+
+</body>
+</html>

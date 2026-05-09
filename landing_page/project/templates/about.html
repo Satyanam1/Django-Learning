@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% block content %}
+
+
+
+<body>
+    
+
+
+<p class="bg-pink-400 text-center text-3xl rounded font-bold">This is About page</p>
+
+
+</div>
+
+<button id="btn" class="bg-green-500 rounded-xl px-4 py-2 mt-5">click here</button><br><br>
+
+Name: {{name|capfirst}} <br><br>
+Welcome: {{name|default:'Guest'|capfirst}} <br><br>
+Age: {{age}} <br><br>
+<!-- Hey: {{hey|wordcount}} <br>
+Hey: {{hey|capfirst}} <br>
+Hey: {{hey|title}} <br>
+City: {{city|upper}} <br> <br>
+
+City: <pre>{{city|center:'15'}}</pre> 
+City: <pre>{{city|ljust:'15'}}</pre> 
+City: <pre>{{city|rjust:'15'}}</pre> 
+City: <pre>{{hey|length}}</pre> <br>
+City: <pre>{{hey|truncatechars:5}}</pre> 
+City: <pre>{{hey|truncatewords:2}}</pre>  -->
+
+<script>
+
+  const button = document.getElementById('btn');
+  button.addEventListener('click',()=>{
+    alert("Hello Satyanam")
+  })
+</script>
+
+
+</body>
+
+{% endblock %}
