@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify OTP</title>
+</head>
+<body>
+
+    <h2>Verify OTP</h2>
+
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Email</label><br>
+        <input type="email" name="email" placeholder="{{ request.session.email}}" readonly><br><br>
+
+        <input type="hidden" name="email" value="{{ request.session.email }}">
+
+        <label>Enter OTP</label><br>
+        <input type="number" name="otp" placeholder="Enter OTP"><br><br>
+
+        <button type="submit">Verify</button>
+    </form>
+
+    <br>
+    <a href="{% url 'forgot_password' %}">Resend OTP</a>
+
+</body>
+</html>

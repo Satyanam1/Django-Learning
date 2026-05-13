@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forgot Password</title>
+</head>
+<body>
+
+    <h2>Forgot Password</h2>
+
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Enter your registered Email</label><br>
+        <input type="email" name="email" placeholder="Enter your email"><br><br>
+
+        <button type="submit">Send OTP</button>
+    </form>
+
+    <br>
+    <a href="{% url 'login' %}">Back to Login</a>
+
+</body>
+</html>

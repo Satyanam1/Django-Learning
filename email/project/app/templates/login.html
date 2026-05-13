@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+    <h2>Login</h2>
+
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Email</label><br>
+        <input type="email" name="email" placeholder="Enter email"><br><br>
+
+        <label>Password</label><br>
+        <input type="password" name="password" placeholder="Enter password"><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <br>
+    <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+    <br>
+    <a href="{% url 'register' %}">Don't have an account? Register</a>
+
+</body>
+</html>
